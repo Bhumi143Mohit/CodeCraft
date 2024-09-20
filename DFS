@@ -1,0 +1,32 @@
+Depth-first Search (DFS) Sample Problem : Implement Depth-First Search(DFS) to traverse a graph starting from a given vertex. The graph is represented by an adjacency list.
+### Python Code for DFS:
+
+python
+# Function to perform DFS traversal
+def dfs(graph, vertex, visited):
+    # Mark the current node as visited
+    visited.add(vertex)
+    print(vertex, end=" ")
+
+    # Recur for all the vertices adjacent to this vertex
+    for neighbor in graph[vertex]:
+        if neighbor not in visited:
+            dfs(graph, neighbor, visited)
+
+# Example usage:
+# Graph represented by an adjacency list
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F'],
+     'D': [],
+    'E': ['F'],
+    'F': []
+}
+
+# Set to keep track of visited nodes
+visited = set()
+
+# Starting DFS from vertex 'A'
+print("Depth-First Search starting from vertex A:")
+dfs(graph, 'A', visited)
