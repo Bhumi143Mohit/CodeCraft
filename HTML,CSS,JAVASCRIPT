@@ -1,0 +1,187 @@
+Implement a responsive social media platform using HTML,CSS,& JavaScript merge a 3 in a single code
+. Ensure that the UI displays properly on both desktop & mobile devices, with features like swipe gestures for navigation on touchenabled devices.
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Social Media Platform</title>
+    
+    <!-- Basic Styles for layout -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #3b5998;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: #eee;
+            padding: 1rem;
+        }
+
+        nav a {
+            color: #333;
+            text-decoration: none;
+            padding: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            overflow-y: scroll;
+        }
+
+        .post {
+            background-color: #fff;
+            width: 100%;
+            max-width: 600px;
+            border: 1px solid #ccc;
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        footer {
+            background-color: #3b5998;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            font-size: 1rem;
+        }
+
+        /* Responsive Design for mobile */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                padding: 0.5rem;
+            }
+
+            nav a {
+                font-size: 1rem;
+                padding: 0.25rem;
+            }
+
+            .post {
+                margin: 0.5rem 0;
+            }
+        }
+
+        /* Swipe Gesture CSS */
+        .swipe-message {
+            color: #3b5998;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        Social Media Platform
+    </header>
+
+    <!-- Navigation Menu -->
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#profile">Profile</a>
+        <a href="#settings">Settings</a>
+    </nav>
+
+    <!-- Content Area -->
+    <div class="content" id="content">
+        <div class="post">
+            <h3>User 1</h3>
+            <p>This is the first post on the social media platform.</p>
+        </div>
+        <div class="post">
+            <h3>User 2</h3>
+            <p>Another interesting post appears here for demonstration.</p>
+        </div>
+        <div class="post">
+            <h3>User 3</h3>
+            <p>Swipe left or right to navigate posts on touch devices.</p>
+        </div>
+        <div class="swipe-message" id="swipeMessage"></div>
+    </div>
+
+    <footer>
+        &copy; 2024 Social Media, Inc.
+    </footer>
+
+    <!-- JavaScript to handle swipe gestures and basic interaction -->
+    <script>
+        // Swipe Gesture Detection
+        let xDown = null;
+        let yDown = null;
+
+        function getTouches(evt) {
+            return evt.touches || evt.originalEvent.touches;
+        }
+
+        function handleTouchStart(evt) {
+            const firstTouch = getTouches(evt)[0];                                      
+            xDown = firstTouch.clientX;                                      
+            yDown = firstTouch.clientY;                                      
+        }
+
+        function handleTouchMove(evt) {
+            if (!xDown || !yDown) {
+                return;
+            }
+
+            let xUp = evt.touches[0].clientX;
+            let yUp = evt.touches[0].clientY;
+
+            let xDiff = xDown - xUp;
+            let yDiff = yDown - yUp;
+
+            if (Math.abs(xDiff) > Math.abs(yDiff)) { // Detect horizontal swipe
+                if (xDiff > 0) {
+                    /* Swipe Left */
+                    document.getElementById('swipeMessage').textContent = "You swiped left!";
+                } else {
+                    /* Swipe Right */
+                    document.getElementById('swipeMessage').textContent = "You swiped right!";
+                }                       
+            } else {
+                if (yDiff > 0) {
+                    /* Swipe Up */
+                    document.getElementById('swipeMessage').textContent = "You swiped up!";
+                } else { 
+                    /* Swipe Down */
+                    document.getElementById('swipeMessage').textContent = "You swiped down!";
+                }                                                                 
+            }
+
+            /* Reset values */
+            xDown = null;
+            yDown = null;                                             
+        }
+
+        document.getElementById('content').addEventListener('touchstart', handleTouchStart, false);
+        document.getElementById('content').addEventListener('touchmove', handleTouchMove, false);
+
+    </script>
+
+</body>
+</html>
